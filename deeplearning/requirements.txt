@@ -1,0 +1,7 @@
+numpy
+scikit-learn
+scipy
+Theano
+colorama
+pickle
+gzip

@@ -1,0 +1,6 @@
+{
+  "github.copilot.enable": {
+    "python": false
+  },
+  "editor.formatOnSave": true
+}
