@@ -7,3 +7,10 @@ node_modules
 .env
 
 env
+
+interp/outputs
+
+interp/wandb
+
+interp/data
+

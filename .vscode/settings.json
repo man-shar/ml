@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "**/**/*.ipynb": "python"
+  },
+  // "[python]": {
+  //   "files.autoSave": "afterDelay"
+  // }
+}

@@ -1,0 +1,9 @@
+einops
+transformer_lens
+jaxtyping
+rich
+torch
+git+https://github.com/callummcdougall/CircuitsVis.git#subdirectory=python
+plotly
+typeguard
+ipywidgets
