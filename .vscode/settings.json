@@ -3,6 +3,8 @@
   "files.associations": {
     "**/**/*.ipynb": "python"
   },
+  "python.languageServer": "Pylance"
+
   // "[python]": {
   //   "files.autoSave": "afterDelay"
   // }

@@ -234,6 +234,7 @@ def test_topological_sort_branching(topological_sort):
     w = Node(x)
     name_lookup = {w: "w", x: "x", y: "y", z: "z"}
     out = "".join([name_lookup[n] for n in topological_sort(w, get_children)])
+    print(out)
     assert out == "zyxw" or out == "yzxw"
     print("All tests in `test_topological_sort_branching` passed!")
 

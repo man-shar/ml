@@ -60,7 +60,11 @@ def unbroadcast(broadcasted: Arr, original: Arr) -> Arr:
 
     # Step 2: sum over dims which were originally 1 (but don't remove them)
     dims_to_sum = tuple(
-        [i for i, (o, b) in enumerate(zip(original.shape, broadcasted.shape)) if o == 1 and b > 1]
+        [
+            i
+            for i, (o, b) in enumerate(zip(original.shape, broadcasted.shape))
+            if o == 1 and b > 1
+        ]
     )
     broadcasted = broadcasted.sum(axis=dims_to_sum, keepdims=True)
 
@@ -147,7 +151,9 @@ class BackwardFuncLookup:
     def __init__(self) -> None:
         self.back_funcs: defaultdict[Callable, dict[int, Callable]] = defaultdict(dict)
 
-    def add_back_func(self, forward_fn: Callable, arg_position: int, back_fn: Callable) -> None:
+    def add_back_func(
+        self, forward_fn: Callable, arg_position: int, back_fn: Callable
+    ) -> None:
         self.back_funcs[forward_fn][arg_position] = back_fn
 
     def get_back_func(self, forward_fn: Callable, arg_position: int) -> Callable:
@@ -310,7 +316,9 @@ class Tensor:
 
     def __bool__(self):
         if np.array(self.shape).prod() != 1:
-            raise RuntimeError("bool value of Tensor with more than one value is ambiguous")
+            raise RuntimeError(
+                "bool value of Tensor with more than one value is ambiguous"
+            )
         return bool(self.item())
 
 
@@ -368,8 +376,12 @@ if MAIN:
     grad_tracking_enabled = False
     b = log_forward(a)
     grad_tracking_enabled = True
-    assert not b.requires_grad, "should not require grad if grad tracking globally disabled"
-    assert b.recipe is None, "should not create recipe if grad tracking globally disabled"
+    assert (
+        not b.requires_grad
+    ), "should not require grad if grad tracking globally disabled"
+    assert (
+        b.recipe is None
+    ), "should not create recipe if grad tracking globally disabled"
 
 # %%
 
@@ -396,7 +408,9 @@ def multiply_forward(a: Tensor | list, b: Tensor | list) -> Tensor:
 
     # If requires_grad, then create a recipe
     if requires_grad:
-        parents = {idx: arr for idx, arr in enumerate([a, b]) if isinstance(arr, Tensor)}
+        parents = {
+            idx: arr for idx, arr in enumerate([a, b]) if isinstance(arr, Tensor)
+        }
         out.recipe = Recipe(np.multiply, (arg_a, arg_b), {}, parents)
 
     return out
@@ -413,8 +427,12 @@ if MAIN:
     grad_tracking_enabled = False
     b = multiply_forward(a, b)
     grad_tracking_enabled = True
-    assert not b.requires_grad, "should not require grad if grad tracking globally disabled"
-    assert b.recipe is None, "should not create recipe if grad tracking globally disabled"
+    assert (
+        not b.requires_grad
+    ), "should not require grad if grad tracking globally disabled"
+    assert (
+        b.recipe is None
+    ), "should not create recipe if grad tracking globally disabled"
 
 # %%
 
@@ -500,11 +518,15 @@ def topological_sort(node: Node, get_children: Callable) -> list[Node]:
     Should raise an error if the graph with `node` as root is not in fact acyclic.
     """
 
-    result: list[
-        Node
-    ] = []  # stores the list of nodes to be returned (in reverse topological order)
-    perm: set[Node] = set()  # same as `result`, but as a set (faster to check for membership)
-    temp: set[Node] = set()  # keeps track of previously visited nodes (to detect cyclicity)
+    result: list[Node] = (
+        []
+    )  # stores the list of nodes to be returned (in reverse topological order)
+    perm: set[Node] = (
+        set()
+    )  # same as `result`, but as a set (faster to check for membership)
+    temp: set[Node] = (
+        set()
+    )  # keeps track of previously visited nodes (to detect cyclicity)
 
     def visit(cur: Node):
         """
@@ -621,7 +643,9 @@ def backprop(end_node: Tensor, end_grad: Tensor | None = None) -> None:
             back_fn = BACK_FUNCS.get_back_func(node.recipe.func, argnum)
 
             # Use this backward function to calculate the gradient
-            in_grad = back_fn(outgrad, node.array, *node.recipe.args, **node.recipe.kwargs)
+            in_grad = back_fn(
+                outgrad, node.array, *node.recipe.args, **node.recipe.kwargs
+            )
 
             # Add the gradient to this node in the dictionary `grads`
             # Note that we only set node.grad (from the grads dict) in the code block above
@@ -716,7 +740,9 @@ def invert_transposition(axes: tuple) -> tuple:
 
     # Slower solution, which makes it clearer what operation is happening:
     reversed_transposition_map = {num: idx for (idx, num) in enumerate(axes)}
-    reversed_transposition = [reversed_transposition_map[idx] for idx in range(len(axes))]
+    reversed_transposition = [
+        reversed_transposition_map[idx] for idx in range(len(axes))
+    ]
     return tuple(reversed_transposition)
 
 
@@ -737,7 +763,9 @@ if MAIN:
     print(np.broadcast_to(x, (3, 3)))
 
     x = np.array([[1], [2], [3]])
-    print(np.broadcast_to(x, (3, 3)))  # x has shape (3, 1); broadcasting is done along rows
+    print(
+        np.broadcast_to(x, (3, 3))
+    )  # x has shape (3, 1); broadcasting is done along rows
 
     x = t.tensor([[1], [2], [3]])
     print(x.expand(-1, 3))
@@ -851,15 +879,25 @@ add = wrap_forward_fn(np.add)
 subtract = wrap_forward_fn(np.subtract)
 true_divide = wrap_forward_fn(np.true_divide)
 
-BACK_FUNCS.add_back_func(np.add, 0, lambda grad_out, out, x, y: unbroadcast(grad_out, x))
-BACK_FUNCS.add_back_func(np.add, 1, lambda grad_out, out, x, y: unbroadcast(grad_out, y))
-BACK_FUNCS.add_back_func(np.subtract, 0, lambda grad_out, out, x, y: unbroadcast(grad_out, x))
-BACK_FUNCS.add_back_func(np.subtract, 1, lambda grad_out, out, x, y: unbroadcast(-grad_out, y))
+BACK_FUNCS.add_back_func(
+    np.add, 0, lambda grad_out, out, x, y: unbroadcast(grad_out, x)
+)
+BACK_FUNCS.add_back_func(
+    np.add, 1, lambda grad_out, out, x, y: unbroadcast(grad_out, y)
+)
+BACK_FUNCS.add_back_func(
+    np.subtract, 0, lambda grad_out, out, x, y: unbroadcast(grad_out, x)
+)
+BACK_FUNCS.add_back_func(
+    np.subtract, 1, lambda grad_out, out, x, y: unbroadcast(-grad_out, y)
+)
 BACK_FUNCS.add_back_func(
     np.true_divide, 0, lambda grad_out, out, x, y: unbroadcast(grad_out / y, x)
 )
 BACK_FUNCS.add_back_func(
-    np.true_divide, 1, lambda grad_out, out, x, y: unbroadcast(grad_out * (-x / y**2), y)
+    np.true_divide,
+    1,
+    lambda grad_out, out, x, y: unbroadcast(grad_out * (-x / y**2), y),
 )
 
 if MAIN:
@@ -1054,7 +1092,10 @@ class Module:
         def _indent(s_, numSpaces):
             return re.sub("\n", "\n" + (" " * numSpaces), s_)
 
-        lines = [f"({key}): {_indent(repr(module), 2)}" for key, module in self._modules.items()]
+        lines = [
+            f"({key}): {_indent(repr(module), 2)}"
+            for key, module in self._modules.items()
+        ]
         return "".join(
             [
                 self.__class__.__name__ + "(",
