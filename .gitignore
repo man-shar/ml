@@ -12,5 +12,6 @@ interp/outputs
 
 interp/wandb
 
-interp/data
+interp/**/data
 
+__pycache__
