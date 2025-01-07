@@ -15,3 +15,5 @@ interp/wandb
 interp/**/data
 
 __pycache__
+
+wandb
