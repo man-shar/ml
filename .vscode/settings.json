@@ -4,7 +4,7 @@
     "**/**/*.ipynb": "python"
   },
   "editor.wordWrap": "on",
-  "python.languageServer": "Pylance",
+  "python.languageServer": "Pylance"
   // "[python]": {
   //   "files.autoSave": "afterDelay"
   // }
