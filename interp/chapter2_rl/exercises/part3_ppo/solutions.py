@@ -47,7 +47,7 @@ from plotly_utils import plot_cartpole_obs_and_dones
 
 # Register our probes from last time
 for idx, probe in enumerate([Probe1, Probe2, Probe3, Probe4, Probe5]):
-    gym.envs.registration.register(id=f"Probe{idx+1}-v0", entry_point=probe)
+    gym.envs.registration.register(id=f"Probe{idx + 1}-v0", entry_point=probe)
 
 Arr = np.ndarray
 
@@ -736,7 +736,7 @@ class PPOTrainer:
         return total_objective_function
 
     def train(self) -> None:
-        if args.use_wandb:
+        if self.args.use_wandb:
             wandb.init(
                 project=self.args.wandb_project_name,
                 entity=self.args.wandb_entity,

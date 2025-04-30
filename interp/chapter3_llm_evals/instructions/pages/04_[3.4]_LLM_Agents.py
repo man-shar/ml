@@ -12,9 +12,10 @@ import streamlit_antd_components as sac
 #     ...
 # ]
 metadata = [
-    {"title": "Intro to Inspect", "icon": "1-circle-fill", "subtitle": "15%"},
-    {"title": "Writing Solvers", "icon": "2-circle-fill", "subtitle": "50%"},
-    {"title": "Writing Tasks and Evaluating", "icon": "3-circle-fill", "subtitle": "35%"},
+    {"title": "Intro to LLM Agents", "icon": "1-circle-fill", "subtitle": "5%"},
+    {"title": "Simple Arithmetic Agent", "icon": "2-circle-fill", "subtitle": "15%"},
+    {"title": "More Complex Agent: WikiGame", "icon": "3-circle-fill", "subtitle": "40%"},
+    {"title": "Elicitation", "icon": "4-circle-fill", "subtitle": "40%"},
 ]
 chapter_name = "chapter3_llm_evals"
 chapter_name_long = "Chapter 3 - LLM Evaluations"

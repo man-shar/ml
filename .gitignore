@@ -5,6 +5,8 @@ paligemma-weights
 node_modules
 
 .env
+.venv
+venv
 
 env
 

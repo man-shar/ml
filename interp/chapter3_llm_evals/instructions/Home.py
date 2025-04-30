@@ -17,9 +17,9 @@ from st_dependencies import HOMEPAGE_CONTENT, create_colab_dropdowns, generate_t
 
 IS_LOCAL = platform.processor() != ""
 
-styling()
+styling("Chapter 3 - LLM Evaluations")
 
-ROOT_URL = "https://raw.githubusercontent.com/callummcdougall/computational-thread-art/master/example_images/misc/"
+ROOT_URL = "https://raw.githubusercontent.com/info-arena/ARENA_img/main/misc/"
 
 
 st.sidebar.markdown(generate_toc(HOMEPAGE_CONTENT), unsafe_allow_html=True)
@@ -42,7 +42,7 @@ The material in this chapter covers LLM evaluations (what they are for, how to d
 Some highlights from this chapter include:
 
 * Design and generate your own MCQ eval from scratch using LLMs, implementing Anthropic's [model-written eval](https://arxiv.org/abs/2212.09251) method
-* Using the [Inspect](https://inspect.ai-safety-institute.org.uk/) by the UK AI Safety Institute (AISI) to run evaluation experiments
+* Using the [Inspect](https://inspect.ai-safety-institute.org.uk/) library written by the UK AI Safety Institute (AISI) to run evaluation experiments
 * Building a LLM agent that plays the Wikipedia Racing game
 * Implementing ReAct and inflexion as elicitation methods for LLM agents 
 

@@ -33,11 +33,17 @@ def plot_rewards(
     filename: str | None = None,
 ):
     # names = ["<br>" + name.replace(", ", "<br>  ").replace("(", "<br>  ").replace(")", "") + "<br>" for name in names]
-    names = [name.replace(", ", "<br>  │").replace("(", "<br>  │").replace(")", "") for name in names]
+    names = [
+        name.replace(", ", "<br>  │").replace("(", "<br>  │").replace(")", "")
+        for name in names
+    ]
 
-    fig = go.Figure(layout=dict(template="simple_white", title_text="Mean reward over all runs"))
+    fig = go.Figure(
+        layout=dict(template="simple_white", title_text="Mean reward over all runs")
+    )
     for rewards, name in zip(all_rewards, names):
         rewards_avg = rewards.mean(axis=0)
+        # print(rewards_avg)
         if moving_avg_window is not None:
             rewards_avg = moving_avg(rewards_avg, moving_avg_window)
         fig.add_trace(go.Scatter(y=rewards_avg, mode="lines", name=name))
@@ -62,7 +68,14 @@ def linear_schedule(
     return max(slope * current_step + start_e, end_e)
 
 
-def make_env(env_id: str, seed: int, idx: int, capture_video: bool, run_name: str, video_log_freq: int = 25):
+def make_env(
+    env_id: str,
+    seed: int,
+    idx: int,
+    capture_video: bool,
+    run_name: str,
+    video_log_freq: int = 25,
+):
     """Return a function that returns an environment after setting up boilerplate."""
 
     def thunk():
@@ -73,7 +86,8 @@ def make_env(env_id: str, seed: int, idx: int, capture_video: bool, run_name: st
                 env = gym.wrappers.RecordVideo(
                     env,
                     f"videos/{run_name}",
-                    step_trigger=lambda x: (x % video_log_freq) == 0,  # Video every 25 episodes steps for env #1
+                    step_trigger=lambda x: (x % video_log_freq)
+                    == 0,  # Video every 25 episodes steps for env #1
                 )
         env.reset(seed=seed)
         env.action_space.seed(seed)
