@@ -19,3 +19,4 @@ interp/**/data
 __pycache__
 
 wandb
+interp/**/videos/**
