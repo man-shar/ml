@@ -1,0 +1,86 @@
+[project]
+name = "ml"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "accelerate>=1.8.1",
+    "anthropic>=0.42.0",
+    "circuitsvis",
+    "datasets>=2.21.0",
+    "diffusers>=0.34.0",
+    "eindex-callum>=0.1.2",
+    "einops>=0.7.0",
+    "frozendict>=2.4.6",
+    "ftfy>=6.3.1",
+    "gdown>=5.2.0",
+    "gymnasium[accept-rom-license,atari,mujoco-py,other]==0.29.0",
+    "hdbscan>=0.8.40",
+    "huggingface-hub[cli]>=0.33.4",
+    "imageio-ffmpeg>=0.6.0",
+    "inspect-ai>=0.3.112",
+    "instructor>=1.9.2",
+    "ipykernel>=6.29.5",
+    "ipywidgets>=7",
+    "jaxtyping>=0.2.38",
+    "jupyter>=1.1.1",
+    "jupyterlab-widgets==1.1.1",
+    "matplotlib>=3.10.3",
+    "mediapy>=1.2.4",
+    "mujoco>=3.3.4",
+    "neel-plotly",
+    "nnsight>=0.3.5",
+    "notebook>=7.4.4",
+    "numpy-stl>=3.2.0",
+    "openai>=1.56.2",
+    "opencv-python>=4.11.0.86",
+    "pandas>=2.3.1",
+    "plotly>=5.24.1",
+    "polars>=1.31.0",
+    "portalocker>=2.0.0",
+    "pre-commit>=4.2.0",
+    "pygame>=2.6.1",
+    "pytest>=8.4.1",
+    "python-dotenv>=1.1.1",
+    "requests>=2.32.4",
+    "sae-lens>=6.5.2",
+    "safetensors>=0.4.5",
+    "scikit-learn>=1.7.0",
+    "sentence-transformers>=5.0.0",
+    "streamlit>=1.46.1",
+    "streamlit-antd-components==0.2.5",
+    "streamlit-image-select>=0.6.0",
+    "streamlit-on-hover-tabs>=1.0.1",
+    "tabulate>=0.9.0",
+    "tiktoken>=0.9.0",
+    "torch>=2.7.1",
+    "torchaudio>=2.7.1",
+    "torchinfo>=1.8.0",
+    "torchtext>=0.18.0",
+    "torchvision>=0.22.1",
+    "tqdm>=4.67.1",
+    "trackio>=0.2.2",
+    "transformer-lens>=2.16.1",
+    "trl>=0.21",
+    "typeguard>=4.4.4",
+    "umap-learn>=0.5.9.post2",
+    "vllm>=0.10",
+    "wandb>=0.21.0",
+    "wikipedia>=1.4.0",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchvision = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+circuitsvis = { git = "https://github.com/callummcdougall/CircuitsVis.git", subdirectory = "python" }
+neel-plotly = { git = "https://github.com/neelnanda-io/neel-plotly" }
