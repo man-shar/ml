@@ -24,3 +24,5 @@ interp/**/videos
 grpo-logs
 
 experiments/paint-with-ember-clone/files
+
+tinygrad-source
