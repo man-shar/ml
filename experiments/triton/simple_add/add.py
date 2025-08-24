@@ -40,9 +40,7 @@ def driver(
     torch.cuda.synchronize()
 
     # 2) Warm up this exact specialization (JIT + caches)
-    add_kernel[grid](
-        x, y, output_triton, size, block_size=block_size, num_warps=num_warps
-    )
+    add_kernel[grid](x, y, output_triton, size, block_size=block_size)
     torch.cuda.synchronize()
 
     start = torch.cuda.Event(enable_timing=True)
@@ -51,9 +49,7 @@ def driver(
     start.record()
 
     for _ in range(iters):
-        add_kernel[grid](
-            x, y, output_triton, size, block_size=block_size, num_warps=num_warps
-        )
+        add_kernel[grid](x, y, output_triton, size, block_size=block_size)
 
     end.record()
 

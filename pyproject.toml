@@ -63,6 +63,7 @@ dependencies = [
     "trackio>=0.2.2",
     "transformer-lens>=2.16.1",
     "triton>=3.3.1",
+    "triton-viz",
     "trl>=0.21",
     "typeguard>=4.4.4",
     "umap-learn>=0.5.9.post2",
@@ -85,3 +86,4 @@ torchvision = [
 ]
 circuitsvis = { git = "https://github.com/callummcdougall/CircuitsVis.git", subdirectory = "python" }
 neel-plotly = { git = "https://github.com/neelnanda-io/neel-plotly" }
+triton-viz = { git = "https://github.com/Deep-Learning-Profiling-Tools/triton-viz" }
