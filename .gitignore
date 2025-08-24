@@ -26,3 +26,5 @@ grpo-logs
 experiments/paint-with-ember-clone/files
 
 tinygrad-source
+
+bench_result*.json

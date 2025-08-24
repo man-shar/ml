@@ -2,18 +2,16 @@
 Simple softmax.
 """
 
-from math import inf
 import math
 import triton
 import triton.language as tl
 import torch as t
-import numpy as np
 
 DEVICE = triton.runtime.driver.active.get_active_torch_device()
 
 
 @triton.jit
-def softmax_simple(x_ptr, output_ptr, M, N, block_size: tl.constexpr):
+def simple_softmax(x_ptr, output_ptr, M, N, block_size: tl.constexpr):
     """
     Assumes row wise block
     """
@@ -61,19 +59,26 @@ def softmax_simple(x_ptr, output_ptr, M, N, block_size: tl.constexpr):
         tl.store(output_ptr + offsets, softmaxed, mask=valid)
 
 
+def bench_runner(M: int, N: int, block_size: int, dtype: t.dtype, num_warps: int):
+    """
+    Run the benchmark for a given M, N, block_size, dtype.
+    """
+
+    x = t.arange(M * N, device=DEVICE, dtype=dtype).reshape((M, N))
+    output = t.empty((M, N), device=DEVICE)
+
+    simple_softmax[(M,)](x, output, M, N, block_size=block_size)
+
+    return x, output
+
+
 if __name__ == "__main__":
     # rows
     M = 200
     # columns
     N = 100
-
-    size = M * N
-
-    x = t.arange(M * N, device=DEVICE, dtype=t.float32).reshape((M, N))
-    output = t.empty((M, N), device=DEVICE)
+    x, output = bench_runner(M, N, 128, t.float32)
     ref = x.softmax(dim=-1)
-
-    softmax_simple[(M,)](x, output, M, N, block_size=128)
 
     assert t.allclose(output, ref), "Failed."
     print("Test passed!!")
