@@ -66,7 +66,7 @@ if __name__ == "__main__":
     M = 200
     # columns
     N = 100
-    x, output = bench_runner(M, N, 128, t.float32)
+    x, output = bench_runner(M, N, 128, t.float32, 4)
     ref = x.softmax(dim=-1)
 
     assert t.allclose(output, ref), "Failed."
