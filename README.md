@@ -10,6 +10,3 @@ _paligemma_
 
 _arena_
 [ARENA 3.0](https://arena3-chapter0-fundamentals.streamlit.app/)
-
-_flash-attention_
-[This video](https://www.youtube.com/watch?v=zy8ChVd_oTM) by Umar Jamil.
