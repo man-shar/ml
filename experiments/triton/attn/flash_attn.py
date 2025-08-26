@@ -183,7 +183,7 @@ if __name__ == "__main__":
     head_dim = 128
     sm_scale = 1.0 / (head_dim**0.5)
 
-    Q, K, V, O = bench_runner(head_dim=128)
+    Q, K, V, O = bench_runner(head_dim=128, dtype=torch.float16)
 
     with torch.no_grad():
         ref = torch.nn.functional.scaled_dot_product_attention(
@@ -193,8 +193,8 @@ if __name__ == "__main__":
             scale=1.0 / (head_dim**0.5),
         ).squeeze()
 
-    max_diff = torch.max(ref - O)
-    mean_diff = torch.mean(ref - O)
+    max_diff = torch.max(torch.abs(ref - O))
+    mean_diff = torch.mean(torch.abs(ref - O))
     diff_str = f"Max difference: {max_diff}, Mean diff: {mean_diff}"
 
     assert torch.allclose(ref, O, atol=1e-2, rtol=0), (
